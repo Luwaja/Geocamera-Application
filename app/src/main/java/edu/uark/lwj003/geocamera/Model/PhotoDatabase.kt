@@ -19,7 +19,7 @@ abstract class PhotoDatabase : RoomDatabase() {
 
     private class PhotoDatabaseCallback(
         private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
+    ) : Callback() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
@@ -33,7 +33,7 @@ abstract class PhotoDatabase : RoomDatabase() {
                     photoDao.deleteAll()
 
                     // Get currentDate
-                    var currentDate = Date()
+                    val currentDate = Date()
 
                     // Add sample photos
                     var photo = Photo(null, 37.424116228426094, -122.08720252531404, currentDate, "Sample1")

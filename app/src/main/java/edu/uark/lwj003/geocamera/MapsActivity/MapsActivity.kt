@@ -113,12 +113,24 @@ class MapsActivity : AppCompatActivity() {
                 as OpenStreetMapFragment? ?:OpenStreetMapFragment.newInstance().also{
             replaceFragmentInActivity(it,R.id.fragmentContainerView)
         }
-
     }
 
     private fun takeNewPhoto(){
-        val takeShowPictureActivityIntent: Intent = Intent(this,TakeShowPictureActivity::class.java)
-        takePictureResultLauncher.launch(takeShowPictureActivityIntent)
+        if (::mCurrentLocation.isInitialized) {
+            val takeShowPictureActivityIntent: Intent = Intent(this, TakeShowPictureActivity::class.java)
+
+            // Get lat and long
+            val latitude = mCurrentLocation.latitude
+            val longitude = mCurrentLocation.longitude
+
+            takeShowPictureActivityIntent.putExtra("LATITUDE", latitude)
+            takeShowPictureActivityIntent.putExtra("LONGITUDE", longitude)
+
+            takePictureResultLauncher.launch(takeShowPictureActivityIntent)
+        } else {
+            // Show a Toast message if mCurrentLocation is not initialized yet
+            Toast.makeText(this, "Location not initialized yet", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun checkForLocationPermission(){

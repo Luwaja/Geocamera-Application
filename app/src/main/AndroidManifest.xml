@@ -39,6 +39,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ClickMarkerActivity.ClickMarkerActivity"
+            android:exported="false">
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="edu.uark.lwj003.geocamera.fileprovider"

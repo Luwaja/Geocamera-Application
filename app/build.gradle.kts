@@ -39,17 +39,23 @@ android {
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.activity:activity-ktx:1.7.2")
+    implementation("androidx.activity:activity-ktx:1.8.0")
     implementation("org.chromium.net:cronet-embedded:113.5672.61")
 
-    //OpenStreetMap Components
+    // OpenStreetMap Components
     implementation("org.osmdroid:osmdroid-android:6.1.14")
 
-    //Google Play Location Service Component
+    // Google Play Location Service Component
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
+    // Camera dependencies
+    implementation ("androidx.camera:camera-core:1.4.0-alpha02")
+    implementation ("androidx.camera:camera-camera2:1.4.0-alpha02")
+    implementation ("androidx.camera:camera-lifecycle:1.4.0-alpha02")
+    implementation ("androidx.camera:camera-view:1.4.0-alpha02")
+
     // Room components
-    val room_version = "2.5.2"
+    val room_version = "2.6.0"
 
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
@@ -70,7 +76,7 @@ dependencies {
 
     // UI
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

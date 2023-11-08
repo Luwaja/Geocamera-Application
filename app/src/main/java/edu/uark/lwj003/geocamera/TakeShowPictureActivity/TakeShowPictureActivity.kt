@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlin.math.roundToInt
+import edu.uark.lwj003.geocamera.Model.Photo
+import edu.uark.lwj003.geocamera.Model.PhotoDatabase
 
 class TakeShowPictureActivity : AppCompatActivity() {
 
@@ -46,13 +48,31 @@ class TakeShowPictureActivity : AppCompatActivity() {
             var retIntent:Intent = Intent()
             retIntent.putExtra("GEOPHOTO_LOC",currentPhotoPath)
             setResult(RESULT_OK,retIntent)
+
+            // Create marker for picture by saving record to db
+            savePhotoToDatabase()
+
             finish()
+        }
+    }
+
+    private fun savePhotoToDatabase() {
+        val latitude = intent.getDoubleExtra("LATITUDE", 0.0)
+        val longitude = intent.getDoubleExtra("LONGITUDE", 0.0)
+        val timestamp = Date()
+        val description = "Description"
+        val photo = Photo(null, latitude, longitude, timestamp, description)
+
+        // Insert the photo into the database
+        val photoDao = PhotoDatabase.getDatabase(this, lifecycleScope).photoDao()
+        lifecycleScope.launch {
+            photoDao.insert(photo)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if(geoPhotoId != -1){
+        if(geoPhotoId != -1 && currentPhotoPath.isNotBlank()){
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
                     Thread.sleep(200)
