@@ -5,13 +5,14 @@ import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.RoomDatabase.Callback
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Date
 
 @Database(entities = arrayOf(Photo::class), version = 1, exportSchema = false)
+@TypeConverters(DateConverter::class)
 abstract class PhotoDatabase : RoomDatabase() {
 
     abstract fun photoDao(): PhotoDao
@@ -31,11 +32,14 @@ abstract class PhotoDatabase : RoomDatabase() {
                     // Delete all content here.
                     photoDao.deleteAll()
 
+                    // Get currentDate
+                    var currentDate = Date()
+
                     // Add sample photos
-                    var photo = Photo(null, 37.424116228426094, -122.08720252531404, Date(), "Sample1")
+                    var photo = Photo(null, 37.424116228426094, -122.08720252531404, currentDate, "Sample1")
                     photoDao.insert(photo)
 
-                    photo = Photo(null, 37.41958541691879, -122.08177063953217, Date(), "Sample2")
+                    photo = Photo(null, 37.41958541691879, -122.08177063953217, currentDate, "Sample2")
                     photoDao.insert(photo)
                 }
             }
