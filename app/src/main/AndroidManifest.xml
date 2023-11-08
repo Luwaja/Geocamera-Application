@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OpenStreetMapFun"
+        android:theme="@style/Theme.Geocamera"
         tools:targetApi="31" >
         <activity
             android:name=".TakeShowPictureActivity.TakeShowPictureActivity"
@@ -41,7 +41,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="edu.uark.ahnelson.openstreetmapfun.fileprovider"
+            android:authorities="edu.uark.lwj003.geocamera.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data

@@ -1,4 +1,4 @@
-package edu.uark.ahnelson.openstreetmapfun.MapsActivity
+package edu.uark.lwj003.geocamera.MapsActivity
 
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import edu.uark.ahnelson.openstreetmapfun.R
+import edu.uark.lwj003.geocamera.R
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
@@ -28,7 +28,7 @@ class OpenStreetMapFragment : Fragment(), Marker.OnMarkerClickListener {
     private lateinit var mMap: MapView
     private lateinit var mLocationOverlay: MyLocationNewOverlay
     private lateinit var mCompassOverlay: CompassOverlay
-    private var curLocation = GeoPoint(34.74, -92.28)
+    private var curLocation = GeoPoint(34.0, -92.28)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

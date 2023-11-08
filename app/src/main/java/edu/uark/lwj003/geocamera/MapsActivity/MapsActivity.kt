@@ -1,4 +1,4 @@
-package edu.uark.ahnelson.openstreetmapfun.MapsActivity
+package edu.uark.lwj003.geocamera.MapsActivity
 
 import android.Manifest
 import android.app.Activity
@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -18,12 +17,12 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import edu.uark.ahnelson.openstreetmapfun.R
-import edu.uark.ahnelson.openstreetmapfun.TakeShowPictureActivity.TakeShowPictureActivity
-import edu.uark.ahnelson.openstreetmapfun.Util.LocationUtilCallback
-import edu.uark.ahnelson.openstreetmapfun.Util.createLocationCallback
-import edu.uark.ahnelson.openstreetmapfun.Util.createLocationRequest
-import edu.uark.ahnelson.openstreetmapfun.Util.replaceFragmentInActivity
+import edu.uark.lwj003.geocamera.R
+import edu.uark.lwj003.geocamera.TakeShowPictureActivity.TakeShowPictureActivity
+import edu.uark.lwj003.geocamera.Util.LocationUtilCallback
+import edu.uark.lwj003.geocamera.Util.createLocationCallback
+import edu.uark.lwj003.geocamera.Util.createLocationRequest
+import edu.uark.lwj003.geocamera.Util.replaceFragmentInActivity
 
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint

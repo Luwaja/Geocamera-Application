@@ -1,4 +1,4 @@
-package edu.uark.ahnelson.openstreetmapfun.TakeShowPictureActivity
+package edu.uark.lwj003.geocamera.TakeShowPictureActivity
 
 import android.app.Activity
 import android.content.Intent
@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import edu.uark.ahnelson.openstreetmapfun.R
+import edu.uark.lwj003.geocamera.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -100,7 +100,7 @@ class TakeShowPictureActivity : AppCompatActivity() {
             val filepath: String = createFilePath()
             val myFile: File = File(filepath)
             currentPhotoPath = filepath
-            val photoUri = FileProvider.getUriForFile(this,"edu.uark.ahnelson.openstreetmapfun.fileprovider",myFile)
+            val photoUri = FileProvider.getUriForFile(this,"edu.uark.lwj003.geocamera.fileprovider",myFile)
             picIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
             takePictureResultLauncher.launch(picIntent)
         }

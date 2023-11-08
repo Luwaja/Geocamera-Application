@@ -1,4 +1,4 @@
-package edu.uark.ahnelson.openstreetmapfun.Util
+package edu.uark.lwj003.geocamera.Util
 
 import androidx.annotation.IdRes
 import androidx.appcompat.app.ActionBar

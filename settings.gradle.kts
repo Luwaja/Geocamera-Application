@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OpenStreetMapFun"
+rootProject.name = "Geocamera"
 include(":app")
  

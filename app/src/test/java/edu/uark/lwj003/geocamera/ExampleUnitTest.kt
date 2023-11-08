@@ -1,4 +1,4 @@
-package edu.uark.ahnelson.openstreetmapfun
+package edu.uark.lwj003.geocamera
 
 import org.junit.Test
 
