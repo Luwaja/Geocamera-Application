@@ -17,6 +17,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import edu.uark.lwj003.geocamera.Model.PhotoDao
 import edu.uark.lwj003.geocamera.R
 import edu.uark.lwj003.geocamera.TakeShowPictureActivity.TakeShowPictureActivity
 import edu.uark.lwj003.geocamera.Util.LocationUtilCallback
@@ -84,8 +85,6 @@ class MapsActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,10 +167,10 @@ class MapsActivity : AppCompatActivity() {
         override fun locationUpdatedCallback(location: Location) {
             mCurrentLocation = location
             mapsFragment.changeCenterLocation(GeoPoint(location.latitude,location.longitude))
-            Log.d(
-                "MainActivity",
-                "Location is [Lat: ${location.latitude}, Long: ${location.longitude}]"
-            )
+//            Log.d(
+//                "MainActivity",
+//                "Location is [Lat: ${location.latitude}, Long: ${location.longitude}]"
+//            )
         }
     }
 

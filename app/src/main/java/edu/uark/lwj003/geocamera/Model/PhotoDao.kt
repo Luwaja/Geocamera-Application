@@ -1,6 +1,5 @@
 package edu.uark.lwj003.geocamera.Model
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -14,11 +13,11 @@ interface PhotoDao {
 
     //Get all photos
     @Query("SELECT * FROM photo_table")
-    fun getAllPhotos(): LiveData<List<Photo>>
+    fun getAllPhotos(): Flow<List<Photo>>
 
     //Get a single photo with a given id
     @Query("SELECT * FROM photo_table WHERE id=:id")
-    fun getPhoto(id:Int): Flow<Photo>
+    fun getPhoto(id:Int): Flow<Photo?>
 
     //Get a single photo with a given id
     @Query("SELECT * FROM photo_table WHERE id=:id")

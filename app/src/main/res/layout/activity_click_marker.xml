@@ -6,6 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".ClickMarkerActivity.ClickMarkerActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSaveDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_save" />
+
     <ImageView
         android:id="@+id/markerPicture"
         android:layout_width="0dp"
@@ -17,9 +39,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/ic_launcher_background"
+        android:src="@drawable/frogsquare" />
 
-    <TextView
+    <EditText
         android:id="@+id/markerDescription"
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -27,9 +50,10 @@
         android:layout_marginBottom="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:hint="Photo description ..."
+        android:gravity="top"
         android:textSize="20sp"
-        android:background="#c9c9c9"
-        />
+        android:background="#c9c9c9" />
 
     <TextView
         android:id="@+id/markerDate"

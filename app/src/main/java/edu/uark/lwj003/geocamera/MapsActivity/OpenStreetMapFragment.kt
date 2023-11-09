@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import edu.uark.lwj003.geocamera.ClickMarkerActivity.ClickMarkerActivity
 import edu.uark.lwj003.geocamera.Model.PhotoDatabase
 import edu.uark.lwj003.geocamera.R
@@ -32,7 +34,6 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 class OpenStreetMapFragment : Fragment(), Marker.OnMarkerClickListener {
 
     private lateinit var mMap: MapView
-    private lateinit var mapViewModel: MapViewModel
     private lateinit var mLocationOverlay: MyLocationNewOverlay
     private lateinit var mCompassOverlay: CompassOverlay
     private var curLocation = GeoPoint(34.0, -92.28)
@@ -132,12 +133,16 @@ class OpenStreetMapFragment : Fragment(), Marker.OnMarkerClickListener {
     private fun loadPhotoMarkers() {
         val photoDao = PhotoDatabase.getDatabase(requireContext(), lifecycleScope).photoDao()
 
-        photoDao.getAllPhotos().observe(viewLifecycleOwner) { photos ->
-            photos?.let {
-                for (photo in it) {
-                    val geoPoint = GeoPoint(photo.latitude, photo.longitude)
-                    val markerId = photo.id ?: -1
-                    addMarker(geoPoint, markerId)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                photoDao.getAllPhotos().collect { photos ->
+                    photos?.let {
+                        for (photo in it) {
+                            val geoPoint = GeoPoint(photo.latitude, photo.longitude)
+                            val markerId = photo.id ?: -1
+                            addMarker(geoPoint, markerId)
+                        }
+                    }
                 }
             }
         }
@@ -193,6 +198,7 @@ class OpenStreetMapFragment : Fragment(), Marker.OnMarkerClickListener {
                     intent.putExtra("PHOTO_ID", photoId)
                     intent.putExtra("DATE", photoDetails.timestamp.toString())
                     intent.putExtra("DESCRIPTION", photoDetails.description)
+                    intent.putExtra("PHOTO_PATH", photoDetails.photoPath)
                     startActivity(intent)
                 } else {
                     // Handle the case when photoDetails is null

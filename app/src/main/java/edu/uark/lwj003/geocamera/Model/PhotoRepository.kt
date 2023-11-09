@@ -1,15 +1,18 @@
 package edu.uark.lwj003.geocamera.Model
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
 class PhotoRepository(private val photoDao: PhotoDao) {
 
+    val allPhotos: Flow<List<Photo>> = photoDao.getAllPhotos()
+
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    fun getPhoto(id:Int):Flow<Photo>{
+    fun getPhoto(id:Int):Flow<Photo?>{
         return photoDao.getPhoto(id)
     }
 

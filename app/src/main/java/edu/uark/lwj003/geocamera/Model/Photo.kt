@@ -11,5 +11,6 @@ data class Photo(
     @ColumnInfo(name = "latitude") var latitude: Double,
     @ColumnInfo(name = "longitude") var longitude: Double,
     @ColumnInfo(name = "timestamp") val timestamp: Date,
-    @ColumnInfo(name = "description") val description: String
+    @ColumnInfo(name = "description") var description: String,
+    @ColumnInfo(name = "photo_path") val photoPath: String
 )

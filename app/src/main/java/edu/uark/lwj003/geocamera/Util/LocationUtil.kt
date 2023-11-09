@@ -38,7 +38,7 @@ fun createLocationCallback(callback: LocationUtilCallback): LocationCallback {
                 //Send the location out through the [callback] object
                 callback.locationUpdatedCallback(it)
                 //And log to make sure we don't keep doing it when we aren't supposed to
-                Log.d("LocationUtil","Current Location is [Lat: ${it.latitude}, Long: ${it.longitude}]")
+//                Log.d("LocationUtil","Current Location is [Lat: ${it.latitude}, Long: ${it.longitude}]")
             }
         }
     }
@@ -71,7 +71,7 @@ fun getLastLocation(context: Context, locationProviderClient: FusedLocationProvi
         if (it != null){
             //Send it back through the callback
             callback.locationUpdatedCallback(it)
-            Log.d("LocationUtil","Last Known Location is [Lat: ${it.latitude}, Long: ${it.longitude}]")
+//            Log.d("LocationUtil","Last Known Location is [Lat: ${it.latitude}, Long: ${it.longitude}]")
         }
     }.addOnCanceledListener {
         //Whoops

@@ -1,6 +1,7 @@
 package edu.uark.lwj003.geocamera.TakeShowPictureActivity
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import edu.uark.lwj003.geocamera.MapsActivity.MapsActivity
 import edu.uark.lwj003.geocamera.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,12 +27,13 @@ import java.util.Locale
 import kotlin.math.roundToInt
 import edu.uark.lwj003.geocamera.Model.Photo
 import edu.uark.lwj003.geocamera.Model.PhotoDatabase
+import java.io.FileInputStream
 
 class TakeShowPictureActivity : AppCompatActivity() {
 
-    var currentPhotoPath: String = ""
-    lateinit var imageView: ImageView
-    var geoPhotoId:Int = -1
+    private var currentPhotoPath: String = ""
+    private lateinit var imageView: ImageView
+    private var geoPhotoId:Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +48,45 @@ class TakeShowPictureActivity : AppCompatActivity() {
             currentPhotoPath = intent.getStringExtra("GEOPHOTO_LOC").toString()
         }
         findViewById<FloatingActionButton>(R.id.fabSave).setOnClickListener {
-            var retIntent:Intent = Intent()
+            val retIntent = Intent()
             retIntent.putExtra("GEOPHOTO_LOC",currentPhotoPath)
             setResult(RESULT_OK,retIntent)
+
+            // Log to check if the setResult is being called
+            Log.d("TakeShowPictureActivity", "Set result called")
 
             // Create marker for picture by saving record to db
             savePhotoToDatabase()
 
-            finish()
+            // Return to map
+            val intent = Intent(this@TakeShowPictureActivity, MapsActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun savePhotoToStorage(photoPath: String) {
+        val photoFile = File(photoPath)
+
+        // Create a new entry in MediaStore.Images.Media
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, photoFile.name)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
+            put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+        }
+
+        // Use the contentResolver to insert the new photo entry
+        val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val uri = contentResolver.insert(contentUri, contentValues)
+
+        // Use an OutputStream to copy the photo file content to the new MediaStore entry
+        uri?.let { photoUri ->
+            contentResolver.openOutputStream(photoUri)?.use { outputStream ->
+                FileInputStream(photoFile).use { inputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
         }
     }
 
@@ -60,13 +94,14 @@ class TakeShowPictureActivity : AppCompatActivity() {
         val latitude = intent.getDoubleExtra("LATITUDE", 0.0)
         val longitude = intent.getDoubleExtra("LONGITUDE", 0.0)
         val timestamp = Date()
-        val description = "Description"
-        val photo = Photo(null, latitude, longitude, timestamp, description)
+        val description = ""
+        val photo = Photo(null, latitude, longitude, timestamp, description, currentPhotoPath)
 
         // Insert the photo into the database
         val photoDao = PhotoDatabase.getDatabase(this, lifecycleScope).photoDao()
         lifecycleScope.launch {
             photoDao.insert(photo)
+            Log.d("SavePhotoToDatabase", "Photo saved to database.")
         }
     }
 
@@ -83,13 +118,16 @@ class TakeShowPictureActivity : AppCompatActivity() {
             }
         }
     }
-    val takePictureResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+    private val takePictureResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_CANCELED){
             Log.d("MainActivity","Take Picture Activity Cancelled")
         }else{
             Log.d("MainActivity", "Picture Taken")
             setPic()
+
+            // Save the photo file to the phone's permanent storage
+            savePhotoToStorage(currentPhotoPath)
         }
     }
 
@@ -118,7 +156,7 @@ class TakeShowPictureActivity : AppCompatActivity() {
         val picIntent: Intent =  Intent().setAction(MediaStore.ACTION_IMAGE_CAPTURE)
         if(picIntent.resolveActivity(packageManager) != null){
             val filepath: String = createFilePath()
-            val myFile: File = File(filepath)
+            val myFile = File(filepath)
             currentPhotoPath = filepath
             val photoUri = FileProvider.getUriForFile(this,"edu.uark.lwj003.geocamera.fileprovider",myFile)
             picIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)

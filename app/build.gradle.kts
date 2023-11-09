@@ -77,6 +77,7 @@ dependencies {
     // UI
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.material:material:1.10.0")
+    implementation ("com.squareup.picasso:picasso:2.71828")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

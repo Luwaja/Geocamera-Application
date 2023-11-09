@@ -32,14 +32,18 @@ abstract class PhotoDatabase : RoomDatabase() {
                     // Delete all content here.
                     photoDao.deleteAll()
 
-                    // Get currentDate
+                    // Get currentDate and photo path
                     val currentDate = Date()
+                    val samplePhotoPath = "sample_photo_placeholder"
 
                     // Add sample photos
-                    var photo = Photo(null, 37.424116228426094, -122.08720252531404, currentDate, "Sample1")
+                    var photo = Photo(null, 36.06873290940289, -94.17498574568246, currentDate, "Sample1", samplePhotoPath)
                     photoDao.insert(photo)
 
-                    photo = Photo(null, 37.41958541691879, -122.08177063953217, currentDate, "Sample2")
+                    photo = Photo(null, 47.86539201882582, -123.93951028386131, currentDate, "Sample2", samplePhotoPath)
+                    photoDao.insert(photo)
+
+                    photo = Photo(null, 34.07605658032576, -118.27187450714965, currentDate, "Sample3", samplePhotoPath)
                     photoDao.insert(photo)
                 }
             }
